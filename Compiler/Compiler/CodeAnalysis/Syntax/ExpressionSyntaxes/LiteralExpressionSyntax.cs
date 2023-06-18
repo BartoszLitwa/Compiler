@@ -1,4 +1,6 @@
-﻿namespace Compiler.Syntax.ExpressionSyntaxes
+﻿using Compiler.CodeAnalysis.Syntax;
+
+namespace Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes
 {
     internal sealed class LiteralExpressionSyntax : ExpressionSyntax
     {

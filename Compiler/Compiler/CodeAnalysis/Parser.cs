@@ -1,7 +1,7 @@
-﻿using Compiler.Syntax;
-using Compiler.Syntax.ExpressionSyntaxes;
+﻿using Compiler.CodeAnalysis.Syntax;
+using Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes;
 
-namespace Compiler
+namespace Compiler.CodeAnalysis
 {
     public sealed class Parser
     {
@@ -43,12 +43,13 @@ namespace Compiler
         {
             ExpressionSyntax left;
             var unaryOperatorPrecedence = Current.Kind.GetUnaryOperatorPrecedence();
-            if(unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
+            if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
             {
                 var operatorToken = NextToken();
                 var operand = ParseExpression(unaryOperatorPrecedence);
                 left = new UnaryExpressionSyntax(operatorToken, operand);
-            } else
+            }
+            else
             {
                 left = ParsePrimaryExpression();
             }
@@ -69,7 +70,7 @@ namespace Compiler
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if(Current.Kind == SyntaxKind.OpenParenthesisToken)
+            if (Current.Kind == SyntaxKind.OpenParenthesisToken)
             {
                 var left = NextToken();
                 var expression = ParseExpression();
@@ -102,7 +103,7 @@ namespace Compiler
         private SyntaxToken Peek(int offset)
         {
             var index = _position + offset;
-            if(index >= _tokens.Length)
+            if (index >= _tokens.Length)
                 return _tokens[_tokens.Length - 1];
 
             return _tokens[index];

@@ -1,5 +1,5 @@
-﻿using Compiler.Evaluate;
-using Compiler.Syntax;
+﻿using Compiler.CodeAnalysis.Syntax;
+using Compiler.CodeAnalysis.Evaluate;
 using System.Text;
 
 namespace Compiler

@@ -1,7 +1,7 @@
-﻿using Compiler.Syntax;
-using Compiler.Syntax.ExpressionSyntaxes;
+﻿using Compiler.CodeAnalysis.Syntax;
+using Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes;
 
-namespace Compiler.Evaluate
+namespace Compiler.CodeAnalysis.Evaluate
 {
     public sealed class Evaluator
     {
@@ -22,7 +22,7 @@ namespace Compiler.Evaluate
             if (node is LiteralExpressionSyntax n)
                 return (int)n.LiteralToken.Value;
 
-            if(node is UnaryExpressionSyntax u)
+            if (node is UnaryExpressionSyntax u)
             {
                 var operand = EvaluateExpression(u.Operand);
 

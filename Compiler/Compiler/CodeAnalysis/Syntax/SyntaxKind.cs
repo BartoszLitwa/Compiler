@@ -1,4 +1,4 @@
-﻿namespace Compiler.Syntax
+﻿namespace Compiler.CodeAnalysis.Syntax
 {
     public enum SyntaxKind
     {
@@ -36,14 +36,14 @@
 
                 SyntaxKind.PlusToken => 1,
                 SyntaxKind.MinusToken => 1,
-                
+
                 _ => 0
             };
         }
 
         public static int GetUnaryOperatorPrecedence(this SyntaxKind kind)
         {
-            return kind switch 
+            return kind switch
             {
                 SyntaxKind.PlusToken => 3,
                 SyntaxKind.MinusToken => 3,

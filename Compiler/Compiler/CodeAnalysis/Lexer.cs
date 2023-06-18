@@ -1,12 +1,12 @@
-﻿using Compiler.Syntax;
+﻿using Compiler.CodeAnalysis.Syntax;
 
-namespace Compiler
+namespace Compiler.CodeAnalysis
 {
     internal sealed class Lexer
     {
         private readonly string _text;
         private int _position;
-        private List<String> _diagnostic = new();
+        private List<string> _diagnostic = new();
 
         public Lexer(string text)
         {
@@ -19,7 +19,7 @@ namespace Compiler
         {
             get
             {
-                if(_position >= _text.Length)
+                if (_position >= _text.Length)
                     return '\0';
                 return _text[_position];
             }
@@ -29,18 +29,18 @@ namespace Compiler
 
         public SyntaxToken Lex()
         {
-            if(_position >= _text.Length)
+            if (_position >= _text.Length)
                 return new SyntaxToken(SyntaxKind.EndOfFileToken, _position, "\0", null);
 
-            if(char.IsDigit(Current))
+            if (char.IsDigit(Current))
             {
                 var start = _position;
-                while(char.IsDigit(Current))
+                while (char.IsDigit(Current))
                     Next();
 
                 var length = _position - start;
                 var text = _text.Substring(start, length);
-                if(!int.TryParse(text, out var value))
+                if (!int.TryParse(text, out var value))
                 {
                     _diagnostic.Add($"The number {_text} isn't valid Int32");
                 }

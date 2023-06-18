@@ -1,6 +1,6 @@
-﻿using Compiler.Syntax.ExpressionSyntaxes;
+﻿using Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes;
 
-namespace Compiler.Syntax
+namespace Compiler.CodeAnalysis.Syntax
 {
     public sealed class SyntaxTree
     {
