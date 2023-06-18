@@ -8,7 +8,7 @@ namespace Compiler
     {
         private static void Main(string[] args)
         {
-            var showTree = false;
+            var showTree = true;
             while(true)
             {
                 Console.Write("> ");

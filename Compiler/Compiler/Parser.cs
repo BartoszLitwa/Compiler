@@ -39,30 +39,18 @@ namespace Compiler
             return new SyntaxTree(_diagnostics, expression, endOfFileToken);
         }
 
-        private ExpressionSyntax ParseTerm()
-        {
-            var left = ParseFactor();
-
-            while(Current.Kind == SyntaxKind.PlusToken
-                   || Current.Kind == SyntaxKind.MinusToken)
-            {
-                var operatorToken = NextToken();
-                var right = ParseFactor();
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
-            }
-
-            return left;
-        }
-
-        private ExpressionSyntax ParseFactor()
+        private ExpressionSyntax ParseExpression(int parentPrecedence = 0)
         {
             var left = ParsePrimaryExpression();
 
-            while (Current.Kind == SyntaxKind.StarToken
-                   || Current.Kind == SyntaxKind.SlashToken)
+            while (true)
             {
+                var precendence = Current.Kind.GetBinaryOperatorPrecedence();
+                if (precendence == 0 || precendence <= parentPrecedence)
+                    break;
+
                 var operatorToken = NextToken();
-                var right = ParsePrimaryExpression();
+                var right = ParseExpression(precendence);
                 left = new BinaryExpressionSyntax(left, operatorToken, right);
             }
 
@@ -89,8 +77,6 @@ namespace Compiler
             _position++;
             return current;
         }
-
-        private ExpressionSyntax ParseExpression() => ParseTerm();
 
         private SyntaxToken MatchToken(SyntaxKind kind)
         {
