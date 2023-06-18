@@ -2,7 +2,7 @@
 
 namespace Compiler
 {
-    public class Lexer
+    internal sealed class Lexer
     {
         private readonly string _text;
         private int _position;
@@ -27,7 +27,7 @@ namespace Compiler
 
         private void Next() => _position++;
 
-        public SyntaxToken NextToken()
+        public SyntaxToken Lex()
         {
             if(_position >= _text.Length)
                 return new SyntaxToken(SyntaxKind.EndOfFileToken, _position, "\0", null);

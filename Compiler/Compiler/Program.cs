@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Compiler
 {
-    public class Program
+    internal static class Program
     {
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            bool showTree = false;
+            var showTree = false;
             while(true)
             {
                 Console.Write("> ");
@@ -32,12 +32,11 @@ namespace Compiler
 
                 if (showTree)
                 {
-                    var color = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.DarkGray;
 
                     PrettyPrint(syntaxTree.Root);
 
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 }
 
                 if (!syntaxTree.Diagnostics.Any())
@@ -48,15 +47,13 @@ namespace Compiler
                 }
                 else
                 {
-                    var color = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
                     foreach (var diagnostic in syntaxTree.Diagnostics)
                         Console.WriteLine(diagnostic);
 
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 }
-
             }
         }
 
@@ -75,7 +72,7 @@ namespace Compiler
             }
 
             Console.WriteLine(sb.ToString());
-            indent += isLast ? " " : "│ ";
+            indent += isLast ? "   " : "│  ";
 
             var lastChild = node.GetChildren().LastOrDefault();
             foreach (var child in node.GetChildren())
