@@ -20,8 +20,9 @@
 
         // Expressions
         LiteralExpression,
+        UnaryExpression,
         BinaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
     }
 
     public static class SyntaxKindExtensions
@@ -36,6 +37,17 @@
                 SyntaxKind.PlusToken => 1,
                 SyntaxKind.MinusToken => 1,
                 
+                _ => 0
+            };
+        }
+
+        public static int GetUnaryOperatorPrecedence(this SyntaxKind kind)
+        {
+            return kind switch 
+            {
+                SyntaxKind.PlusToken => 3,
+                SyntaxKind.MinusToken => 3,
+
                 _ => 0
             };
         }
