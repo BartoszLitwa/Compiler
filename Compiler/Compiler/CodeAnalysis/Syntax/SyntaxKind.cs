@@ -18,6 +18,11 @@
         OpenParenthesisToken,
         CloseParenthesisToken,
 
+        // Keywords
+        FalseKeyword,
+        TrueKeyword,
+        IdentifierKeyword,
+
         // Expressions
         LiteralExpression,
         UnaryExpression,
@@ -25,7 +30,7 @@
         ParenthesizedExpression,
     }
 
-    public static class SyntaxKindExtensions
+    public static class SyntaxFacts
     {
         public static int GetBinaryOperatorPrecedence(this SyntaxKind kind)
         {
@@ -49,6 +54,16 @@
                 SyntaxKind.MinusToken => 3,
 
                 _ => 0
+            };
+        }
+
+        public static SyntaxKind GetKeywordKind(string text)
+        {
+            return text switch
+            {
+                "true" => SyntaxKind.TrueKeyword,
+                "false" => SyntaxKind.FalseKeyword,
+                _ => SyntaxKind.IdentifierKeyword,
             };
         }
     }

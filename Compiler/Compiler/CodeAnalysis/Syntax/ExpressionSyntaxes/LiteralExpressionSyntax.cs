@@ -1,17 +1,20 @@
-﻿using Compiler.CodeAnalysis.Syntax;
-
-namespace Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes
+﻿namespace Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes
 {
     internal sealed class LiteralExpressionSyntax : ExpressionSyntax
     {
         public LiteralExpressionSyntax(SyntaxToken literalToken)
+            : this(literalToken, literalToken.Value) { }
+
+        public LiteralExpressionSyntax(SyntaxToken literalToken, object value)
         {
+            Value = value;
             LiteralToken = literalToken;
         }
 
-        public SyntaxToken LiteralToken { get; set; }
-
         public override SyntaxKind Kind => SyntaxKind.LiteralExpression;
+
+        public SyntaxToken LiteralToken { get; }
+        public object Value { get; }
 
         public override IEnumerable<SyntaxNode> GetChildren()
         {

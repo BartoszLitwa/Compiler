@@ -1,7 +1,5 @@
 ﻿using Compiler.CodeAnalysis.Syntax;
 using Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes;
-using System.Linq.Expressions;
-using System.Reflection.Emit;
 
 namespace Compiler.CodeAnalysis.Binding
 {
@@ -24,7 +22,7 @@ namespace Compiler.CodeAnalysis.Binding
 
         private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax)
         {
-            var value = syntax.LiteralToken.Value as int? ?? 0;
+            var value = syntax.Value ?? 0;
             return new BoundLiteralExpression(value);
         }
 
