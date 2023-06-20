@@ -1,4 +1,6 @@
-﻿namespace Compiler.CodeAnalysis.Binding
+﻿using Compiler.CodeAnalysis.Binding.Node;
+
+namespace Compiler.CodeAnalysis.Binding.Expression
 {
     internal sealed class BoundLiteralExpression : BoundExpression
     {
