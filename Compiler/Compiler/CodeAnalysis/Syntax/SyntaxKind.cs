@@ -15,6 +15,10 @@
         StarToken,
         SlashToken,
 
+        BangToken, // !
+        AmpersandAmpersandToken, // &&
+        PipePipeToken, // ||
+
         OpenParenthesisToken,
         CloseParenthesisToken,
 
@@ -36,11 +40,15 @@
         {
             return kind switch
             {
-                SyntaxKind.StarToken => 2,
-                SyntaxKind.SlashToken => 2,
+                SyntaxKind.StarToken => 4,
+                SyntaxKind.SlashToken => 4,
 
-                SyntaxKind.PlusToken => 1,
-                SyntaxKind.MinusToken => 1,
+                SyntaxKind.PlusToken => 3,
+                SyntaxKind.MinusToken => 3,
+
+                SyntaxKind.AmpersandAmpersandToken => 2,
+
+                SyntaxKind.PipePipeToken => 1,
 
                 _ => 0
             };
@@ -50,8 +58,9 @@
         {
             return kind switch
             {
-                SyntaxKind.PlusToken => 3,
-                SyntaxKind.MinusToken => 3,
+                SyntaxKind.PlusToken => 5,
+                SyntaxKind.MinusToken => 5,
+                SyntaxKind.BangToken => 5,
 
                 _ => 0
             };

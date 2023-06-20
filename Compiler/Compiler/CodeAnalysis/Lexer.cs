@@ -15,14 +15,15 @@ namespace Compiler.CodeAnalysis
 
         public IEnumerable<string> Diagnostics => _diagnostic;
 
-        private char Current
+        private char Current => Peek(0);
+        private char LookAhead => Peek(1);
+
+        private char Peek(int offset)
         {
-            get
-            {
-                if (_position >= _text.Length)
-                    return '\0';
-                return _text[_position];
-            }
+            var index = _position + offset;
+            if (index >= _text.Length)
+                return '\0';
+            return _text[index];
         }
 
         private void Next() => _position++;
@@ -81,8 +82,25 @@ namespace Compiler.CodeAnalysis
                 '/' => new SyntaxToken(SyntaxKind.SlashToken, _position++, "/", null),
                 '(' => new SyntaxToken(SyntaxKind.OpenParenthesisToken, _position++, "(", null),
                 ')' => new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null),
+                '!' => new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null),
+                '&' => AmpersandAmpersandOperator(),
+                '|' => PipePipeOperator(),
                 _ => ReturnBadToken()
             };
+        }
+
+        private SyntaxToken AmpersandAmpersandOperator()
+        {
+            if (LookAhead == '&')
+                return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position += 2, "&&", null);
+            return ReturnBadToken();
+        }
+
+        private SyntaxToken PipePipeOperator()
+        {
+            if (LookAhead == '|')
+                return new SyntaxToken(SyntaxKind.PipePipeToken, _position += 2, "||", null);
+            return ReturnBadToken();
         }
 
         private SyntaxToken ReturnBadToken()
