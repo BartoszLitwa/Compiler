@@ -1,6 +1,8 @@
-﻿namespace Compiler.Syntax.ExpressionSyntaxes
+﻿using Compiler.CodeAnalysis.Syntax;
+
+namespace Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes
 {
-    internal sealed class BinaryExpressionSyntax : ExpressionSyntax
+    public sealed class BinaryExpressionSyntax : ExpressionSyntax
     {
         public BinaryExpressionSyntax(
             ExpressionSyntax left,

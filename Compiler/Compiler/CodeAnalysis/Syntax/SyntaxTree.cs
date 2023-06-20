@@ -1,11 +1,6 @@
-﻿using Compiler.Syntax.ExpressionSyntaxes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes;
 
-namespace Compiler.Syntax
+namespace Compiler.CodeAnalysis.Syntax
 {
     public sealed class SyntaxTree
     {

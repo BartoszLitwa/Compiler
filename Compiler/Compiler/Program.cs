@@ -1,14 +1,15 @@
-﻿using Compiler.Evaluate;
-using Compiler.Syntax;
+﻿using Compiler.CodeAnalysis.Syntax;
+using Compiler.CodeAnalysis.Evaluate;
 using System.Text;
+using Compiler.CodeAnalysis.Binding;
 
 namespace Compiler
 {
-    public class Program
+    internal static class Program
     {
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            bool showTree = false;
+            var showTree = true;
             while(true)
             {
                 Console.Write("> ");
@@ -29,34 +30,35 @@ namespace Compiler
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
+
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree)
                 {
-                    var color = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.DarkGray;
 
                     PrettyPrint(syntaxTree.Root);
 
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    var e = new Evaluator(syntaxTree.Root);
+                    var e = new Evaluator(boundExpression);
                     var result = e.Evaluate();
                     Console.WriteLine(result);
                 }
                 else
                 {
-                    var color = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                    foreach (var diagnostic in diagnostics)
                         Console.WriteLine(diagnostic);
 
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 }
-
             }
         }
 
@@ -75,7 +77,7 @@ namespace Compiler
             }
 
             Console.WriteLine(sb.ToString());
-            indent += isLast ? " " : "│ ";
+            indent += isLast ? "   " : "│  ";
 
             var lastChild = node.GetChildren().LastOrDefault();
             foreach (var child in node.GetChildren())

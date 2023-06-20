@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Compiler.CodeAnalysis.Syntax;
 
-namespace Compiler.Syntax.ExpressionSyntaxes
+namespace Compiler.CodeAnalysis.Syntax.ExpressionSyntaxes
 {
     public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
     {
