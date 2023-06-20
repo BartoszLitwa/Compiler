@@ -82,9 +82,10 @@ namespace Compiler.CodeAnalysis
                 '/' => new SyntaxToken(SyntaxKind.SlashToken, _position++, "/", null),
                 '(' => new SyntaxToken(SyntaxKind.OpenParenthesisToken, _position++, "(", null),
                 ')' => new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null),
-                '!' => new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null),
                 '&' => AmpersandAmpersandOperator(),
                 '|' => PipePipeOperator(),
+                '=' => EqualsEqualsOperator(),
+                '!' => BangEqualsOperator(),
                 _ => ReturnBadToken()
             };
         }
@@ -101,6 +102,20 @@ namespace Compiler.CodeAnalysis
             if (LookAhead == '|')
                 return new SyntaxToken(SyntaxKind.PipePipeToken, _position += 2, "||", null);
             return ReturnBadToken();
+        }
+
+        private SyntaxToken EqualsEqualsOperator()
+        {
+            if (LookAhead == '=')
+                return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position += 2, "==", null);
+            return ReturnBadToken();
+        }
+
+        private SyntaxToken BangEqualsOperator()
+        {
+            if (LookAhead == '=')
+                return new SyntaxToken(SyntaxKind.BangEqualsToken, _position += 2, "!=", null);
+            return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
         }
 
         private SyntaxToken ReturnBadToken()

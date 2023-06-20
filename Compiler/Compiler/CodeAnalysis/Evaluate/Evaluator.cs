@@ -47,8 +47,12 @@ namespace Compiler.CodeAnalysis.Evaluate
                     BoundBinaryOperatorKind.Subtraction => (int)left - (int)right,
                     BoundBinaryOperatorKind.Multiplication => (int)left * (int)right,
                     BoundBinaryOperatorKind.Division => (int)left / (int)right,
+
                     BoundBinaryOperatorKind.LogicalAnd => (bool)left && (bool)right,
                     BoundBinaryOperatorKind.LogicalOr => (bool)left || (bool)right,
+
+                    BoundBinaryOperatorKind.Equals => Equals(left, right),
+                    BoundBinaryOperatorKind.NotEquals => !Equals(left, right),
                     _ => throw new Exception($"Unexpected binary operator: {b.Op}")
                 };
             }

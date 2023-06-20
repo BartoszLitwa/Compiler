@@ -9,7 +9,7 @@ namespace Compiler.CodeAnalysis.Binding.Unary
 
         private BoundUnaryOperator(SyntaxKind syntaxKind, BoundUnaryOperatorKind kind, Type operandType, Type resultType)
         {
-            ResultType = resultType;
+            Type = resultType;
             OperandType = operandType;
             Kind = kind;
             SyntaxKind = syntaxKind;
@@ -18,7 +18,7 @@ namespace Compiler.CodeAnalysis.Binding.Unary
         public SyntaxKind SyntaxKind { get; }
         public BoundUnaryOperatorKind Kind { get; }
         public Type OperandType { get; }
-        public Type ResultType { get; }
+        public Type Type { get; }
 
         private static BoundUnaryOperator[] _operator =
         {

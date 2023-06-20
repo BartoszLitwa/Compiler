@@ -17,7 +17,7 @@ namespace Compiler.CodeAnalysis.Binding.Binary
         public BoundBinaryOperator Op { get; }
         public BoundExpression Right { get; }
 
-        public override Type Type => Right.Type;
+        public override Type Type => Op.Type;
         public override BoundNodeKind Kind => BoundNodeKind.BinaryExpression;
 
     }
