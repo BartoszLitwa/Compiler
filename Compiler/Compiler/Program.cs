@@ -1,6 +1,7 @@
 ﻿using Compiler.CodeAnalysis.Syntax;
 using Compiler.CodeAnalysis.Evaluate;
 using System.Text;
+using Compiler.CodeAnalysis.Binding;
 
 namespace Compiler
 {
@@ -29,6 +30,10 @@ namespace Compiler
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
+
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree)
                 {
@@ -39,9 +44,9 @@ namespace Compiler
                     Console.ResetColor();
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    var e = new Evaluator(syntaxTree.Root);
+                    var e = new Evaluator(boundExpression);
                     var result = e.Evaluate();
                     Console.WriteLine(result);
                 }
